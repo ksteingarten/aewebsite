@@ -7,11 +7,7 @@ const ExpressError = require("./utils/ExpressError");
 const catchAsync = require("./utils/catchAsync");
 const { productValidationSchema } = require("./utils/validationSchema");
 
-mongoose.connect("mongodb://localhost:27017/articulate-eyewear", {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-});
+mongoose.connect("mongodb://localhost:27017/articulate-eyewear");
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error"));
@@ -85,7 +81,7 @@ app.patch(
         const product = await Product.findByIdAndUpdate(req.params.id, {
             ...req.body.product,
         });
-        res.redirect(`/products/${product._id}`);
+        res.redirect(`/products/${product?._id}`);
     })
 );
 
